@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title><%= current_page.data.title || "Calgary Hub" %></title>
+<link rel="apple-touch-icon" href="/img/calgaryfun.png" />
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<script src="/js/bootstrap.min.js"></script>
+<div class="container">
+<% if content_for?(:header) %>
+<%= yield_content :header %>
+<% else %>
+<%= partial "/layouts/partials/header_nav" %>
+<% end %>
+<div class="alert alert-info">
+This site is currently in development, please excuse any bugs.<br>
+Try our mobile site as well - visit http://mobile.calgaryhub.com on your Android device or iPhone!
+</div>
+<div id="content"><%= yield %></div>
+<br>
+<br>
+<br>
+<%= partial "/layouts/partials/footer" %>
+</div><!-- .container -->
+</body>
+</html>

@@ -1,0 +1,6 @@
+<h1>Activities</h1>
+<ul>
+  <% data.activities.each do |id, activity| %>
+  <li><a href="/activity/<%= id %>/"><%= activity.title %></a></li>
+  <% end %>
+</ul>

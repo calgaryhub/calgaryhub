@@ -1,0 +1,19 @@
+<div id="name">
+<%= place.title %>
+</div>
+<% if place.website %>
+<div id="website">
+<a href="<%= place.website %>"><%= place.website %></a>
+</div>
+<% end %>
+<% if place.address %>
+<div id="address"><%= place.address %></div>
+<% end %>
+<% if place.phone %>
+<div id="phone">
+Phone: <%= place.phone %>
+</div>
+<% end %>
+<% if place.description %>
+<div id="description"><%= place.description %></div>
+<% end %>

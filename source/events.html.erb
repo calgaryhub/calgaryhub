@@ -1,0 +1,6 @@
+<h1>Events</h1>
+<ul>
+  <% data.events.each do |id, event| %>
+  <li><a href="/event/<%= id %>/"><%= event.title %></a></li>
+  <% end %>
+</ul>

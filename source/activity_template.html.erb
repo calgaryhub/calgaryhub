@@ -1,0 +1,38 @@
+<div id="activity" title="<%= activity.title %>" class="panel">
+  <fieldset>
+    <div class="row">
+      <p><%= activity.title %></p>
+    </div>
+    <% if activity.website %>
+    <div id="website">
+      <a href="<%= activity.website %>"><%= activity.website %></a>
+    </div>
+    <% end %>
+    <% if activity.adults_only or activity.is_free %>
+    <div class="row">
+      <p><% if activity.adults_only %>18+ <% end %><% if activity.is_free %>FREE <% end %></p>
+    </div>
+    <% end %>
+  </fieldset>
+  <% if activity.description %>
+  <fieldset>
+    <div class="row">
+      <p><%= activity.description %></p>
+    </div>
+  </fieldset>
+  <% end %>
+  <% if activity.phone_number %>
+  <fieldset>
+    <div class="row">
+      <p>Phone: <%= activity.phone_number %></p>
+    </div>
+  </fieldset>
+  <% end %>
+  <% if activity.locations %>
+  <ul>
+  <% activity.locations.each do |location| %>
+    <li><a href="/location/<%= location %>"><%= location %></a></li>
+  <% end %>
+  </ul>
+  <% end %>
+</div>
