@@ -1,0 +1,9 @@
+---
+backbutton: false
+layout: mobile_layout
+---
+<ul data-role="listview">
+  <% data.locations.sort.each do |id, place| %>
+  <li><a href="<%= mobile_root %>/location/<%= id %>"><%= place.title %></a></li>
+  <% end %>
+</ul>

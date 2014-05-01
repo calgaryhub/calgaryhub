@@ -36,7 +36,7 @@
 # activate :automatic_image_sizes
 
 # Reload the browser automatically whenever files change
-# activate :livereload
+activate :livereload
 
 # Methods defined in the helpers block are available in templates
 # helpers do
@@ -45,11 +45,17 @@
 #   end
 # end
 
+activate :asset_host
+set :asset_host, 'http://assets.calgaryhub.com'
+
 set :css_dir, 'css'
 
 set :js_dir, 'js'
 
 set :images_dir, 'img'
+
+set :mobile_dir, '/mobile.calgaryhub.com'
+set :mobile_root, 'http://mobile.calgaryhub.com'
 
 # Build-specific configuration
 configure :build do
@@ -60,7 +66,7 @@ configure :build do
   # activate :minify_javascript
 
   # Enable cache buster
-  # activate :asset_hash
+  activate :asset_hash
 
   # Use relative URLs
   # activate :relative_assets
@@ -69,6 +75,10 @@ configure :build do
   # set :http_prefix, "/Content/images/"
 
   activate :directory_indexes
+
+  activate :gzip
+
+  activate :minify_html
 end
 
 page "/about.html"
@@ -76,14 +86,23 @@ page "/locations.html"
 page "/events.html"
 page "/activities.html"
 
+proxy "#{mobile_dir}/about.html", "/mobile/about.html", :ignore => true
+proxy "#{mobile_dir}/index.html", "/mobile/index.html", :ignore => true
+proxy "#{mobile_dir}/locations.html", "/mobile/locations.html", :ignore => true
+proxy "#{mobile_dir}/events.html", "/mobile/events.html", :ignore => true
+proxy "#{mobile_dir}/activities.html", "/mobile/activities.html", :ignore => true
+
 data.locations.each do |id, place|
   proxy "/location/#{id}.html", "/location_template.html", :locals => { :place => place }, :ignore => true
+  proxy "#{mobile_dir}/location/#{id}.html", "/mobile/location_template.html", :locals => { :place => place }, :ignore => true
 end
 
 data.events.each do |id, event|
-  proxy "/event/#{id}.html", "/event_template.html", :locals => { :event => event }, :ignore => true
+  proxy "/event/#{id}.html", "/event_template.html", :locals => { :event => event, :all_locations => data.locations }, :ignore => true
+  proxy "#{mobile_dir}/event/#{id}.html", "/mobile/event_template.html", :locals => { :event => event, :all_locations => data.locations }, :ignore => true
 end
 
 data.activities.each do |id, activity|
-  proxy "/activity/#{id}.html", "/activity_template.html", :locals => { :activity => activity }, :ignore => true
+  proxy "/activity/#{id}.html", "/activity_template.html", :locals => { :activity => activity, :all_locations => data.locations }, :ignore => true
+  proxy "#{mobile_dir}/activity/#{id}.html", "/mobile/activity_template.html", :locals => { :activity => activity, :all_locations => data.locations }, :ignore => true
 end

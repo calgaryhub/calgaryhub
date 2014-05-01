@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <title><%= current_page.data.title || "Calgary Hub" %></title>
-<link rel="apple-touch-icon" href="/img/calgaryfun.png" />
-<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link rel="apple-touch-icon" href="<%= asset_url 'calgaryfun.png', 'img' %>" />
+<%= stylesheet_link_tag "bootstrap.min" %>
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 </head>
 <body>
-<script src="/js/bootstrap.min.js"></script>
+<%= javascript_include_tag 'bootstrap.min' %>
 <div class="container">
 <% if content_for?(:header) %>
 <%= yield_content :header %>

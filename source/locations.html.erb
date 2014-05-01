@@ -1,6 +1,6 @@
 <h1>Locations</h1>
 <ul>
-  <% data.locations.each do |id, place| %>
+  <% data.locations.sort.each do |id, place| %>
   <li><a href="/location/<%= id %>/"><%= place.title %></a></li>
   <% end %>
 </ul>

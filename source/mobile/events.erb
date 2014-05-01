@@ -1,0 +1,11 @@
+---
+backbutton: false
+layout: mobile_layout
+---
+
+<ul data-role="listview">
+<%# TODO sort by date, group dates %>
+<% data.events.each do |id, event| %>
+  <li><a href="<%= mobile_root %>/event/<%= id %>/"><%= event.title %></a></li>
+<% end %>
+</ul>

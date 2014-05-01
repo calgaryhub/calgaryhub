@@ -1,0 +1,19 @@
+---
+layout: mobile_layout
+---
+<p><%= event.name %></p>
+<p>
+Starts: <%= event.start %>
+<% if event.end %><br>Ends: <%= event.end %><% end %>
+<br>
+<% if event.adults_only %>18+ <% end %><% if event.is_free %>FREE <% end %></p>
+<% if event.description %>
+<p><%= event.description %></p>
+<% end %>
+<% if event.locations %>
+<ul data-role="listview" data-inset="true">
+<% event.locations.each do |location| %>
+  <li><a href="<%= mobile_root %>/location/<%= location %>"><%= location %></a></li>
+<% end %>
+</ul>
+<% end %>

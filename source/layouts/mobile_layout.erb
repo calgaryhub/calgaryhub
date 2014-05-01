@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+<title><%= current_page.data.title || "Calgary Hub" %></title>
+<link rel="apple-touch-icon" href="<%= asset_url 'app_icon.png', 'img' %>" />
+<link rel="apple-touch-startup-image" href="<%= asset_url 'app_startup.png', 'img' %>">
+<%= stylesheet_link_tag "calgaryhub.min", "jquery.mobile.structure-1.2.0.min" %>
+<%= javascript_include_tag "jquery-1.8.2.min", "jquery.mobile-1.2.0.min" %>
+<%= partial "/layouts/partials/viewport_metajunk" %>
+</head>
+<body>
+<div data-role="page" data-add-back-btn="<%= current_page.data.backbutton || "true" %>">
+	<div data-role="header">
+		<h1>Calgary Hub</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+<%= yield %>
+	</div><!-- content -->
+<%= partial "/layouts/partials/mobile_footer" %>
+</div><!-- page -->
+<script type="text/javascript">
+jQuery(document).ready(function() {
+ jQuery.mobile.defaultPageTransition = 'slide';
+});
+</script>
+</body>
+</html>

@@ -28,10 +28,13 @@
     </div>
   </fieldset>
   <% end %>
-  <% if activity.locations %>
+  <% if ( activity.locations || activity.locations_tag ) %>
   <ul>
-  <% activity.locations.each do |location| %>
-    <li><a href="/location/<%= location %>"><%= location %></a></li>
+  <% locs = [] %>
+  <% locs += activity.locations if activity.locations %>
+  <% locs += data.locations.select{ |id,place| place.tags.include? activity.locations_tag if place.tags }.keys if activity.locations_tag %>
+  <% locs.sort.uniq.each do |location| %>
+    <li><a href="/location/<%= location %>"><%= data.locations[location].title %></a></li>
   <% end %>
   </ul>
   <% end %>

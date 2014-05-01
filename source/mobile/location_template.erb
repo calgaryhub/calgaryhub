@@ -1,0 +1,32 @@
+---
+layout: mobile_layout
+---
+<div id="location" title="<%= place.title %>" class="panel">
+  <fieldset>
+    <div class="row">
+      <p><%= place.title %></p>
+    </div>
+    <% if place.website %>
+    <div class="row">
+      <p><a target="_blank" href="<%= place.website %>"><%= place.website %></a></p>
+    </div>
+    <% end %>
+    <% if place.address %>
+    <div class="row">
+      <p><%= place.address %></p>
+    </div>
+    <% end %>
+    <% if place.phone %>
+    <div class="row">
+      <p>Phone: <%= place.phone %></p>
+    </div>
+    <% end %>
+  </fieldset>
+  <% if place.description %>
+  <fieldset>
+    <div class="row">
+      <p><%= place.description %></p>
+    </div>
+  </fieldset>
+  <% end %>
+</div>

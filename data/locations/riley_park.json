@@ -1,5 +1,8 @@
 {
-"title": "Riley Park",
-"address": "800 12 St. NW",
-"website":"http://www.calgary.ca/CSPS/Parks/Pages/Locations/NW-parks/Riley-Park.aspx"
+  "title": "Riley Park",
+  "address": "800 12 St. NW",
+  "website":"http://www.calgary.ca/CSPS/Parks/Pages/Locations/NW-parks/Riley-Park.aspx",
+  "tags": [
+    "public_garden"
+  ]
 }
