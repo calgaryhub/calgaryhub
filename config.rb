@@ -1,3 +1,4 @@
+require 'date'
 ###
 # Compass
 ###
@@ -81,15 +82,19 @@ configure :build do
   activate :minify_html
 end
 
+live_events = data.events.select{ |id, event| DateTime.parse(event["start"]) > DateTime.now }
+live_events = live_events.map{ |id,ev| ev["id"] = id ; ev }
+live_events.sort_by!{ |e| DateTime.parse(e["start"]).to_time.to_i }
+
 page "/about.html"
 page "/locations.html"
-page "/events.html"
+proxy "/events.html", "/events_list.html", locals: { live_events: live_events }, ignore: true
 page "/activities.html"
 
 proxy "#{mobile_dir}/about.html", "/mobile/about.html", :ignore => true
 proxy "#{mobile_dir}/index.html", "/mobile/index.html", :ignore => true
 proxy "#{mobile_dir}/locations.html", "/mobile/locations.html", :ignore => true
-proxy "#{mobile_dir}/events.html", "/mobile/events.html", :ignore => true
+proxy "#{mobile_dir}/events.html", "/mobile/events.html", ignore: true, locals: { events: live_events }
 proxy "#{mobile_dir}/activities.html", "/mobile/activities.html", :ignore => true
 
 data.locations.each do |id, place|
@@ -97,9 +102,9 @@ data.locations.each do |id, place|
   proxy "#{mobile_dir}/location/#{id}.html", "/mobile/location_template.html", :locals => { :place => place }, :ignore => true
 end
 
-data.events.each do |id, event|
-  proxy "/event/#{id}.html", "/event_template.html", :locals => { :event => event, :all_locations => data.locations }, :ignore => true
-  proxy "#{mobile_dir}/event/#{id}.html", "/mobile/event_template.html", :locals => { :event => event, :all_locations => data.locations }, :ignore => true
+live_events.each do |event|
+  proxy "/event/#{event.id}.html", "/event_template.html", :locals => { :event => event, :all_locations => data.locations }, :ignore => true
+  proxy "#{mobile_dir}/event/#{event.id}.html", "/mobile/event_template.html", :locals => { :event => event, :all_locations => data.locations }, :ignore => true
 end
 
 data.activities.each do |id, activity|

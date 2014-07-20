@@ -1,0 +1,6 @@
+<h1>Events</h1>
+<ul>
+  <% live_events.each do |event| %>
+  <li><a href="/event/<%= event.id %>/"><%= DateTime.parse(event.start).strftime('%b %d, %Y') %> - <%= event.title %></a></li>
+  <% end %>
+</ul>

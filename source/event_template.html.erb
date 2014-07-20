@@ -1,33 +1,23 @@
-<div id="event" title="<%= event.name %>" class="panel">
-  <fieldset>
-    <div class="row">
-      <p><%= event.name %></p>
-    </div>
-    <% if event.website %>
-    <div id="website">
-      <a href="<%= event.website %>"><%= event.website %></a>
-    </div>
-    <% end %>
-    <div class="row">
-      <p>
-      Starts: <%= event.start %>
-      <% if event.end %><br>Ends: <%= event.end %><% end %>
-      <br>
-      <% if event.adults_only %>18+ <% end %><% if event.is_free %>FREE <% end %></p>
-    </div>
-  </fieldset>
-  <% if event.description %>
-  <fieldset>
-    <div class="row">
-      <p><%= event.description %></p>
-    </div>
-  </fieldset>
-  <% end %>
-  <% if event.locations %>
-  <ul>
-  <% event.locations.each do |location| %>
-    <li><a href="/location/<%= location %>"><%= location %></a></li>
-  <% end %>
-  </ul>
-  <% end %>
+<div class="name">
+<h1><%= event.title %></h1>
 </div>
+<% if event.website %>
+<div id="website">
+<a href="<%= event.website %>"><%= event.website %></a>
+</div>
+<% end %>
+<p>
+Starts: <%= DateTime.parse(event.start) %>
+<% if event.end %><br>Ends: <%= event.end %><% end %>
+<br>
+<% if event.adults_only %>18+ <% end %><% if event.is_free %>FREE <% end %></p>
+<% if event.description %>
+<div class="row"><%= event.description %></div>
+<% end %>
+<% if event.locations %>
+<ul>
+<% event.locations.each do |location| %>
+  <li><a href="/location/<%= location %>"><%= location %></a></li>
+<% end %>
+</ul>
+<% end %>
