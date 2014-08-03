@@ -16,10 +16,11 @@
 <% else %>
 <%= partial "/layouts/partials/header_nav" %>
 <% end %>
+<% if content_for?(:alert_bar) %>
 <div class="alert alert-info">
-This site is currently in development, please excuse any bugs.<br>
-Try our mobile site as well - visit http://mobile.calgaryhub.com on your Android device or iPhone!
+<%= yield_content :alert_bar %>
 </div>
+<% end %>
 <div id="content"><%= yield %></div>
 <br>
 <br>
