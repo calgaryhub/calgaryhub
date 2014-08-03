@@ -1,4 +1,5 @@
 require 'date'
+ENV["TZ"] = "US/Mountain"
 ###
 # Compass
 ###
@@ -81,6 +82,8 @@ configure :build do
 
   activate :minify_html
 end
+
+set :event_date_format, '%F %l:%M %p'
 
 live_events = data.events.select{ |id, event| DateTime.parse(event["start"]) > DateTime.now }
 live_events = live_events.map{ |id,ev| ev["id"] = id ; ev }
