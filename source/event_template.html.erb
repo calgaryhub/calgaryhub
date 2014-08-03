@@ -17,7 +17,7 @@ Starts: <%= DateTime.parse(event.start).strftime(event_date_format) %>
 <% if event.locations %>
 <ul>
 <% event.locations.each do |location| %>
-  <li><a href="/location/<%= location %>"><%= location %></a></li>
+  <li><a href="/location/<%= location %>"><%= data.locations[location].title %></a></li>
 <% end %>
 </ul>
 <% end %>
