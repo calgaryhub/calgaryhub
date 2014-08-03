@@ -1,8 +1,14 @@
 ---
 layout: mobile_layout
 ---
-<p><%= event.name %></p>
+
+<h1><%= event.title %></h1>
 <p>
+<% if event.website %>
+<div id="website">
+<a href="<%= event.website %>"><%= event.website %></a>
+</div>
+<% end %>
 Starts: <%= DateTime.parse(event.start).strftime(event_date_format) %>
 <% if event.end %><br>Ends: <%= DateTime.parse(event.end).strftime(event_date_format) %><% end %>
 <br>
