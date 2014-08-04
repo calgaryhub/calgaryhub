@@ -7,7 +7,8 @@
 </div>
 <% end %>
 <p>
-Starts: <%= DateTime.parse(event.start).strftime(event_date_format) %>
+<% event.show_time ||= true %>
+Starts: <%= DateTime.parse(event.start).strftime(event.show_time ? event_datetime_format : event_date_format ) %>
 <% if event.end %><br>Ends: <%= DateTime.parse(event.end).strftime(event_date_format) %><% end %>
 <br>
 <% if event.adults_only %>18+ <% end %><% if event.is_free %>FREE <% end %></p>
