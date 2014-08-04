@@ -51,9 +51,7 @@ activate :asset_host
 set :asset_host, 'http://assets.calgaryhub.com'
 
 set :css_dir, 'css'
-
 set :js_dir, 'js'
-
 set :images_dir, 'img'
 
 set :mobile_dir, '/mobile.calgaryhub.com'
