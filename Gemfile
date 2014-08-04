@@ -16,3 +16,8 @@ gem "middleman-livereload", "~> 3.1.0"
 gem "wdm", "~> 0.1.0", :platforms => [:mswin, :mingw]
 
 gem "multi_json", '1.7.8'
+
+group :development do
+  gem "guard"
+  gem "guard-middleman"
+end

@@ -19,4 +19,4 @@
 /.cache
 *.pyc
 /fabfile.py
-/data
+.gitmodules
