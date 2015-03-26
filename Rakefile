@@ -30,3 +30,8 @@ desc "Build site"
 task :build do
   sh 'bundle exec middleman build --verbose'
 end
+
+desc "Remove build directory"
+task :clean do
+  sh "rm -rf #{build_directory}"
+end
