@@ -1,5 +1,6 @@
 require 'date'
-ENV["TZ"] = "US/Mountain"
+require 'site_details'
+ENV["TZ"] = CityHub::Timezone
 ###
 # Compass
 ###
@@ -48,14 +49,16 @@ activate :livereload
 # end
 
 activate :asset_host
-set :asset_host, 'http://assets.calgaryhub.com'
+set :site_title, CityHub::SiteTitle
+set :site_tagline, CityHub::SiteTagline
+set :asset_host, "http://#{CityHub::AssetURL}"
 
 set :css_dir, 'css'
 set :js_dir, 'js'
 set :images_dir, 'img'
 
-set :mobile_dir, '/mobile.calgaryhub.com'
-set :mobile_root, 'http://mobile.calgaryhub.com'
+set :mobile_dir, "/#{CityHub::MobileURL}"
+set :mobile_root, "http://#{CityHub::MobileURL}"
 
 # Build-specific configuration
 configure :build do
