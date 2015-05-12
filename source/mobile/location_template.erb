@@ -19,7 +19,7 @@ layout: mobile_layout
     <% end %>
     <% if place.phone %>
     <div class="row">
-      <p>Phone: <%= place.phone %></p>
+      <p>Phone: <a href="tel:+1-<%= place.phone %>"><%= place.phone %></a></p>
     </div>
     <% end %>
   </fieldset>
