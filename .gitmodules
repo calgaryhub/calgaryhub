@@ -1,5 +1,0 @@
-[submodule "data"]
-	path = data
-	url = git@github.com:calgaryhub/calgary_hub_data.git
-	branch = master
-	ignore = dirty
