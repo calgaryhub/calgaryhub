@@ -5,8 +5,6 @@ gem "middleman-minify-html"
 
 gem "rake", "~>10.3.2"
 
-gem "therubyracer"
-
 # Live-reloading plugin
 gem "middleman-livereload", "~> 3.1.0"
 
