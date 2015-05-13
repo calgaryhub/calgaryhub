@@ -58,6 +58,7 @@ GEM
     htmlcompressor (0.1.2)
     http_parser.rb (0.6.0)
     i18n (0.7.0)
+    icalendar (2.3.0)
     json (1.8.2)
     kramdown (1.7.0)
     listen (2.10.0)
@@ -158,6 +159,7 @@ PLATFORMS
 DEPENDENCIES
   guard
   guard-middleman
+  icalendar (~> 2.3.0)
   middleman (~> 3.3.2)
   middleman-livereload (~> 3.1.0)
   middleman-minify-html

@@ -1,5 +1,6 @@
 require 'date'
 require 'site_details'
+require 'icalendar'
 ENV["TZ"] = CityHub::Timezone
 ###
 # Compass
@@ -107,10 +108,25 @@ data.locations.each do |id, place|
   proxy "#{mobile_dir}/location/#{id}.html", "/mobile/location_template.html", :locals => { :place => place }, :ignore => true
 end
 
+cal = Icalendar::Calendar.new
 live_events.each do |event|
   proxy "/event/#{event.id}.html", "/event_template.html", :locals => { :event => event, :all_locations => data.locations }, :ignore => true
   proxy "#{mobile_dir}/event/#{event.id}.html", "/mobile/event_template.html", :locals => { :event => event, :all_locations => data.locations }, :ignore => true
+  cal.event do |e|
+    e.summary = event.title
+    e.dtstart = DateTime.parse(event.start)
+    e.dtend = DateTime.parse(event.end)
+    e.description = event.description if event.description
+    e.url = event.website if event.website
+    e.location = event.locations.map{|l| data.locations[l].title }.join(', ') if event.locations
+    e.transp = "TRANSPARENT"
+    # e.last_modified = DateTime.now
+  end
 end
+
+fp = File.open('calgaryhub.ical', 'w')
+fp.write(cal.to_ical)
+fp.close
 
 data.activities.each do |id, activity|
   proxy "/activity/#{id}.html", "/activity_template.html", :locals => { :activity => activity, :all_locations => data.locations }, :ignore => true

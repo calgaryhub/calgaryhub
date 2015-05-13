@@ -28,7 +28,8 @@ end
 
 desc "Build site"
 task :build do
-  sh 'bundle exec middleman build --verbose'
+  sh 'bundle exec middleman build'
+  sh 'mv calgaryhub.ical build/'
 end
 
 desc "Remove build directory"
