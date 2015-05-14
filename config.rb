@@ -43,11 +43,11 @@ ENV["TZ"] = CityHub::Timezone
 activate :livereload
 
 # Methods defined in the helpers block are available in templates
-# helpers do
-#   def some_helper
-#     "Helping"
-#   end
-# end
+helpers do
+  def complete_phone_number num
+    "#{CityHub::PhoneCountryCodePrefix}-#{num}"
+  end
+end
 
 activate :asset_host
 set :site_title, CityHub::SiteTitle
@@ -120,7 +120,6 @@ live_events.each do |event|
     e.url = event.website if event.website
     e.location = event.locations.map{|l| data.locations[l].title }.join(', ') if event.locations
     e.transp = "TRANSPARENT"
-    # e.last_modified = DateTime.now
   end
 end
 

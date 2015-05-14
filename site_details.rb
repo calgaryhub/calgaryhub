@@ -4,4 +4,6 @@ class CityHub
   SiteTagline = "Do something fun in YYC today!"
   AssetURL = "assets.calgaryhub.com"
   MobileURL = "mobile.calgaryhub.com"
+  DefaultCity = "Calgary"
+  PhoneCountryCodePrefix = "1"
 end
