@@ -14,7 +14,7 @@ layout: mobile_layout
     <% end %>
     <% if place.address %>
     <div class="row">
-      <p><%= place.address %></p>
+      <p><%= place.address %><% if place.city %>, <%= place.city %><% end %></p>
     </div>
     <% end %>
     <% if place.phone %>

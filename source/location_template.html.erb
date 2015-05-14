@@ -7,7 +7,7 @@
 </div>
 <% end %>
 <% if place.address %>
-<div id="address"><%= place.address %></div>
+<div id="address"><%= place.address %><% if place.city %>, <%= place.city %><% end %></div>
 <% end %>
 <% if place.phone %>
 <div id="phone">
