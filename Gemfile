@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem "middleman", "~>3.3.2"
 gem "middleman-minify-html"
 gem "icalendar", "~> 2.3.0"
+gem "haml", "~> 4.0.6"
 
 gem "rake", "~>10.3.2"
 

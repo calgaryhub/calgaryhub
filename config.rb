@@ -1,6 +1,7 @@
 require 'date'
 require 'site_details'
 require 'icalendar'
+require 'haml'
 ENV["TZ"] = CityHub::Timezone
 ###
 # Compass
@@ -42,24 +43,50 @@ ENV["TZ"] = CityHub::Timezone
 # Reload the browser automatically whenever files change
 activate :livereload
 
+set :event_datetime_format, '%F %l:%M %p'
+set :event_date_format, '%F'
+set :pretty_mobile_list_date_format, '%b %d, %Y'
+set :sortby_date_format, '%F'
+
 # Methods defined in the helpers block are available in templates
 helpers do
   def complete_phone_number num
     "#{CityHub::PhoneCountryCodePrefix}-#{num}"
   end
+
+  def neat_address place
+    if place.address
+      return "#{place.address}, #{place.city}" if place.city
+      return place.address
+    end
+  end
+
+  def format_ts timestamp, format
+    DateTime.parse(timestamp).strftime(format)
+  end
+
+  def sortby_date timestamp
+    DateTime.parse(timestamp).strftime('%F')
+  end
+
+  def pretty_mobile_list_date timestamp
+    DateTime.parse(timestamp).strftime('%b %d, %Y')
+  end
+
+  def location_name_from_id id
+    data.locations[id].title
+  end
 end
 
-activate :asset_host
+activate :asset_host unless ENV['local_mode']
+
 set :site_title, CityHub::SiteTitle
 set :site_tagline, CityHub::SiteTagline
-set :asset_host, "http://#{CityHub::AssetURL}"
+set :asset_host, "https://#{CityHub::AssetURL}"
 
 set :css_dir, 'css'
 set :js_dir, 'js'
 set :images_dir, 'img'
-
-set :mobile_dir, "/#{CityHub::MobileURL}"
-set :mobile_root, "http://#{CityHub::MobileURL}"
 
 # Build-specific configuration
 configure :build do
@@ -73,7 +100,7 @@ configure :build do
   activate :asset_hash
 
   # Use relative URLs
-  # activate :relative_assets
+  activate :relative_assets if ENV['local_mode']
 
   # Or use a different image path
   # set :http_prefix, "/Content/images/"
@@ -85,10 +112,20 @@ configure :build do
   activate :minify_html
 end
 
-set :event_datetime_format, '%F %l:%M %p'
+set :event_datetime_format, '%b %d, %l:%M %p'
 set :event_date_format, '%F'
+set :pretty_mobile_list_date_format, '%b %d, %Y'
+set :sortby_date_format, '%F'
 
-live_events = data.events.select{ |id, event| DateTime.parse(event["start"]) > DateTime.now }
+set :haml, { :ugly => true, :format => :html5 }
+
+live_events = data.events.select{ |id, event|
+  if event["end"]
+    DateTime.parse(event["end"]) >= DateTime.now
+  else
+    DateTime.parse(event["start"]) >= DateTime.now
+  end
+}
 live_events = live_events.map{ |id,ev| ev["id"] = id ; ev }
 live_events.sort_by!{ |e| DateTime.parse(e["start"]).to_time.to_i }
 
@@ -97,21 +134,13 @@ page "/locations.html"
 proxy "/events.html", "/events_list.html", locals: { live_events: live_events }, ignore: true
 page "/activities.html"
 
-proxy "#{mobile_dir}/about.html", "/mobile/about.html", :ignore => true
-proxy "#{mobile_dir}/index.html", "/mobile/index.html", :ignore => true
-proxy "#{mobile_dir}/locations.html", "/mobile/locations.html", :ignore => true
-proxy "#{mobile_dir}/events.html", "/mobile/events.html", ignore: true, locals: { events: live_events }
-proxy "#{mobile_dir}/activities.html", "/mobile/activities.html", :ignore => true
-
 data.locations.each do |id, place|
   proxy "/location/#{id}.html", "/location_template.html", :locals => { :place => place }, :ignore => true
-  proxy "#{mobile_dir}/location/#{id}.html", "/mobile/location_template.html", :locals => { :place => place }, :ignore => true
 end
 
 cal = Icalendar::Calendar.new
 live_events.each do |event|
   proxy "/event/#{event.id}.html", "/event_template.html", :locals => { :event => event, :all_locations => data.locations }, :ignore => true
-  proxy "#{mobile_dir}/event/#{event.id}.html", "/mobile/event_template.html", :locals => { :event => event, :all_locations => data.locations }, :ignore => true
   cal.event do |e|
     e.summary = event.title
     e.dtstart = DateTime.parse(event.start)
@@ -129,5 +158,4 @@ fp.close
 
 data.activities.each do |id, activity|
   proxy "/activity/#{id}.html", "/activity_template.html", :locals => { :activity => activity, :all_locations => data.locations }, :ignore => true
-  proxy "#{mobile_dir}/activity/#{id}.html", "/mobile/activity_template.html", :locals => { :activity => activity, :all_locations => data.locations }, :ignore => true
 end

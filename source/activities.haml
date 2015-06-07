@@ -1,0 +1,8 @@
+---
+backbutton: false
+---
+
+%ul{:data => {:role => "listview"}}
+  - data.activities.sort.each do |id, activity|
+    %li
+      = link_to activity.title, "/activity/#{id}"

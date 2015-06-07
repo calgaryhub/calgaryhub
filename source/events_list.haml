@@ -1,0 +1,11 @@
+---
+backbutton: false
+---
+
+- sd = nil
+%ul{ :data => { :role => 'listview' }}
+  - live_events.each do |event|
+    - if sd != sortby_date(event.start)
+      %li{:class => 'group'}= pretty_mobile_list_date(event.start)
+      %li
+        = link_to event.title, "/event/#{event.id}/"

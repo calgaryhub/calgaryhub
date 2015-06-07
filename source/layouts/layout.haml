@@ -1,0 +1,18 @@
+!!! 5
+%html
+  %head
+    %title= current_page.data.title || site_title
+    %link{:rel => "apple-touch-icon", :href => asset_url('app_icon.png', 'img')}
+    %link{:rel => "apple-touch-startup-image", :href => asset_url('app_startup.png', 'img')}
+    = stylesheet_link_tag "calgaryhub.min", "jquery.mobile.structure-1.4.5.min"
+    = javascript_include_tag "jquery-1.11.3.min", "jquery.mobile-1.4.5.min"
+    = partial "/layouts/partials/viewport_metajunk"
+  %body
+    %div{:data => {:role => "page", :class => "main"}}
+      %div{:data => {:role => "header", :"add-back-btn" => current_page.data.backbutton || "true"}}
+        %h1= site_title
+      %div{:data => {:role => "content"}}
+        = yield
+      = partial "/layouts/partials/footer"
+    :javascript
+      jQuery(document).ready(function() { jQuery.mobile.defaultPageTransition = 'slide'; });

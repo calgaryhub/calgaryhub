@@ -1,0 +1,24 @@
+%div{:id => "location", :title => place.title, :class => "panel"}
+  %fieldset
+    .row
+      %h1= place.title
+
+    - if place.website
+      .row
+        %p
+          %a{:target => "_blank", :href => place.website}= place.website
+
+    - if place.address
+      .row
+        %p= neat_address place
+
+    - if place.phone
+      .row
+        %p
+          :erb
+            Phone: <a href="tel:+<%= complete_phone_number place.phone %>"><%= place.phone %></a>
+
+  - if place.description
+    %fieldset
+      .row
+        %p= place.description

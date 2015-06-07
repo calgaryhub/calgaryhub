@@ -1,0 +1,22 @@
+%h1= event.title
+%p
+  - if event.website
+    #website
+      %a{:href => event.website}= event.website
+      %br
+    Starts: #{format_ts(event.start, event_datetime_format)}
+    - if event.end
+      %br
+      Ends: #{format_ts(event.end, event_datetime_format)}
+
+- if event.description
+  %p= event.description
+
+- if event.locations || event.address
+  %ul{:data => {:role => "listview", :inset => "true"}}
+    - if event.address
+      %li= event.address
+    - if event.locations
+      - event.locations.each do |location|
+        %li
+          = link_to data.locations[location].title, "/location/#{location}"

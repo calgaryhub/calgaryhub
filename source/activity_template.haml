@@ -1,0 +1,20 @@
+.row
+  %h1= activity.title
+
+- if activity.description
+  .row
+    %p= activity.description
+
+- if activity.phone_number
+  .row
+    %p
+      Phone: #{activity.phone_number}
+
+- if ( activity.locations || activity.locations_tag )
+  %ul{:data => {:role => "listview", :inset => "true"}}
+    - locs = []
+    - locs += activity.locations if activity.locations
+    - locs += data.locations.select{|id,place| place.tags.include? activity.locations_tag if place.tags }.keys if activity.locations_tag
+    -  locs.sort.uniq.each do |location|
+      %li
+        = link_to data.locations[location].title, "/location/#{location}"

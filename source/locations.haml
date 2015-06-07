@@ -1,0 +1,8 @@
+---
+backbutton: false
+---
+
+%ul{ :data => { :role => 'listview' }}
+  - data.locations.sort.each do |id, place|
+    %li
+      = link_to place.title, "/location/#{id}"
